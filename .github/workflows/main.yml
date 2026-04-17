@@ -48,10 +48,11 @@ jobs:
           php -S 127.0.0.1:8000 -t public &
       - name: Run Cypress
         uses: cypress-io/github-action@v7
-        with:
-          wait-on: 'http://127.0.0.1:8000'
-          wait-on-timeout: 60
-
+      - name: mep du fichier env
+        run:
+          env.docker .env
+      - mame: création de la bdd
+        cp: mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
 # job : build (environnemt du projet)
 
 # compiler le code
