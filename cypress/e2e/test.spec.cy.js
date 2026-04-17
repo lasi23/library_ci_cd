@@ -1,7 +1,7 @@
 describe('test du site de librairie', ()=>{
     beforeEach(() => {
       // On considère que l'app tourne sur le port par défaut de Vite
-        cy.visit('https://library.mithridatem.fr/')
+        cy.visit('127.0.0.1:8000')
         cy.fixture('usersLibrary').as('userData');
     })
 
@@ -10,7 +10,7 @@ describe('test du site de librairie', ()=>{
     })
 
     it('dioit remplir le formulaire d inscription avec 19 utilisateur', function(){
-        cy.visit('https://library.mithridatem.fr/register')
+        cy.visit('127.0.0.1:8000/register')
         cy.fixture('usersLibrary').then((userData) => {
         const users = userData.all
 
@@ -28,7 +28,7 @@ describe('test du site de librairie', ()=>{
     })
 
     it('doit afficher un message si le compte existe déjà', ()=>{
-        cy.visit('https://library.mithridatem.fr/register')
+        cy.visit('127.0.0.1:8000/register')
 
         cy.fixture('usersLibrary').then((data) => {
 
@@ -48,7 +48,7 @@ describe('test du site de librairie', ()=>{
     })
 
     it('doit pouvoir ce connecter', ()=>{
-        cy.visit('https://library.mithridatem.fr/login')
+        cy.visit('127.0.0.1:8000/login')
 
         cy.fixture('usersLibrary').then((data) => {
             const user = data.users[5]
@@ -61,7 +61,7 @@ describe('test du site de librairie', ()=>{
     })
     
     it('ne doit pas pouvoir ce connecter avec un identiant et mdp non enregisté', ()=>{
-        cy.visit('https://library.mithridatem.fr/login')
+        cy.visit('127.0.0.1:8000/login')
 
         cy.get('#email').type('bob@eponge.fr')
         cy.get('#password').type('1234')
@@ -72,7 +72,7 @@ describe('test du site de librairie', ()=>{
     })
 
     it('doit ajouter un  livre', ()=>{
-    cy.visit('https://library.mithridatem.fr/login')
+    cy.visit('127.0.0.1:8000/login')
 
             cy.fixture('usersLibrary').then((data) => {
                 const user = data.users[5]
@@ -81,7 +81,7 @@ describe('test du site de librairie', ()=>{
 
                 cy.get('button[type="submit"]').click()
             })
-            cy.visit('https://library.mithridatem.fr/book/add')
+            cy.visit('127.0.0.1:8000/book/add')
             cy.get('#author').type('Don Miguel RHUIZ')
             cy.get('#description').type('Premier accord toltèque : Que votre parole soit impeccable. Deuxième accord toltèque : N en faites pas une affaire personnelle. Troisième accord toltèque : Ne faites pas de suppositions. Quatrième accord toltèque : Faites toujours de votre mieux.')
             cy.get('#publish_at').type('1997-01-01')
@@ -93,7 +93,7 @@ describe('test du site de librairie', ()=>{
     })
 
     it('dois pouvoir emprunter un film', ()=> {
-        cy.visit('https://library.mithridatem.fr/login')
+        cy.visit('127.0.0.1:8000/login')
 
         cy.fixture('usersLibrary').then((data) => {
             const user = data.users[5]
@@ -102,7 +102,7 @@ describe('test du site de librairie', ()=>{
             cy.get('button[type="submit"]').click()
         })
 
-        cy.visit('https://library.mithridatem.fr/lending/add')
+        cy.visit('127.0.0.1:8000/lending/add')
         // cy.get(#book_id).eq('10')
     })
 })
