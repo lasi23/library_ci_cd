@@ -1,9 +1,9 @@
 describe('test du site de librairie', ()=>{
-    beforeEach(() => {
+    // beforeEach(() => {
       // On considère que l'app tourne sur le port par défaut de Vite
         cy.visit('127.0.0.1:8000')
         cy.fixture('usersLibrary').as('userData');
-    })
+    // })
 
     it('doit aVOIR UNE BARRE NAV', ()=> {
         cy.get('nav').should('exist')
