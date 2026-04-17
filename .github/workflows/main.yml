@@ -46,19 +46,11 @@ jobs:
       - name: démarrer le serveur PHP
         run: |
           php -S 127.0.0.1:8000 -t public &
-      - name: End-to-end tests
-        on: push
-        jobs:
-          cypress-run:
-            runs-on: ubuntu-24.04
-            steps:
-              - name: Checkout
-                uses: actions/checkout@v6
-              # Install dependencies with caching
-              # and run all Cypress tests
-              - name: Cypress run
-                uses: cypress-io/github-action@v7
-                          env: host=api.dev.local,port=4222
+      - name: Run Cypress
+        uses: cypress-io/github-action@v7
+        with:
+          wait-on: 'http://127.0.0.1:8000'
+          wait-on-timeout: 60
 
 # job : build (environnemt du projet)
 
