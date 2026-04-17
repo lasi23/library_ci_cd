@@ -50,9 +50,9 @@ jobs:
         uses: cypress-io/github-action@v7
       - name: mep du fichier env
         run:
-          env.docker .env
+        run: cp  env.docker .env
       - name: création de la bdd
-        cp: mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
+        run: mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
 # job : build (environnemt du projet)
 
 # compiler le code
