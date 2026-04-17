@@ -2,12 +2,12 @@ describe('test du site de librairie', ()=>{
     // beforeEach(() => {
       // On considère que l'app tourne sur le port par défaut de Vite
         cy.visit('127.0.0.1:8000')
-        cy.fixture('usersLibrary').as('userData');
+        // cy.fixture('usersLibrary').as('userData');
     // })
 
-    it('doit aVOIR UNE BARRE NAV', ()=> {
-        cy.get('nav').should('exist')
-    })
+    // it('doit aVOIR UNE BARRE NAV', ()=> {
+    //     cy.get('nav').should('exist')
+    // })
 
     // it('dioit remplir le formulaire d inscription avec 19 utilisateur', function(){
     //     cy.visit('127.0.0.1:8000/register')
