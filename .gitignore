@@ -2,7 +2,6 @@ composer.lock
 *.env
 vendor/
 node_modules/
-package-lock.json
 *.png
 *.jpg
 *.jpeg
