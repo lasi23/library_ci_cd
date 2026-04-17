@@ -5,7 +5,7 @@ describe('test du site de librairie', ()=>{
       // })
 
     it('doit aVOIR UNE BARRE NAV', ()=> {
-        cy.visit('127.0.0.1:8000')
+        cy.visit('http://127.0.0.1:8000')
         // cy.get('nav').should('exist')
     })
 
