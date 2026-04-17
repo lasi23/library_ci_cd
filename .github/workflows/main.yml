@@ -51,7 +51,7 @@ jobs:
       - name: mep du fichier env
         run:
           env.docker .env
-      - mame: création de la bdd
+      - name: création de la bdd
         cp: mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
 # job : build (environnemt du projet)
 
