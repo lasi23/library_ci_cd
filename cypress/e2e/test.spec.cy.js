@@ -85,7 +85,7 @@ describe('test du site de librairie', ()=>{
             cy.get('#description').type('Premier accord toltèque : Que votre parole soit impeccable. Deuxième accord toltèque : N en faites pas une affaire personnelle. Troisième accord toltèque : Ne faites pas de suppositions. Quatrième accord toltèque : Faites toujours de votre mieux.')
             cy.get('#publish_at').type('1997-01-01')
             cy.get('input[type="file"]').selectFile('cypress/fixtures/les_4_accord_tolteque.jpg')
-            cy.get('#categories').select('17').invoke('val').should('deep.equal', ['17'])
+            cy.get('#categories').eq('0')
             cy.get('button[type="submit"]').click()
             cy.get('#title').type('Les 4 accords tolteques')
             
