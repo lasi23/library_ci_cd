@@ -66,9 +66,9 @@ jobs:
           echo 'DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}'>> .env
           echo 'DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}'>> .env
           echo 'DATABASE_NAME=${{ secrets.DATABASE_NAME }}'>> .env
-      - name: 📂 Deployment to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          username: ${{ secrets.FTP_USERNAME }}
+      # - name: 📂 Deployment to FTP
+      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+      #   with:
+      #     server: ${{ secrets.FTP_SERVER }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     username: ${{ secrets.FTP_USERNAME }}
