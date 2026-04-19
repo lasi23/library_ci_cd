@@ -1,81 +1,4 @@
-Denver
-denverevned
-En ligne
 
-Mathieu MITH — 17/04/2026 09:15
-lien de l'évaluation github :
-Type de fichier joint : acrobat
-Evaluation_git_CDA-ALT-26-01.pdf
-499.79 KB
-Envoyer au formateur l’url du repository github de l’évaluation de rattrapage
-(à récupérer dans code sur github).
-Dans un mail avec comme objet : evaluation git CDA-ALT-26-01 Nom prénom
-Contenu du mail l’url du repository github
-email : mathieumithridate@adrar-formation.com
-Mathieu MITH — 17/04/2026 11:18
-repository projet :
-⁠testing_plan-de-test⁠ 
-Mathieu MITH — 17/04/2026 12:14
-Depuis le projet library :
-1 fork depuis l'url : https://github.com/evaluationWeb/library_ci_cd.git
-2 Editer le fichier main.yml
-ajouter les steps suivante (à la suite) :
-1 Créer le fichier .env avec le contenu suivant :
-DATABASE_HOST=localhost
-DATABASE_PORT=3306
-DATABASE_USERNAME=root
-DATABASE_PASSWORD=rootpw
-DATABASE_NAME=ci_cd
-UPLOAD_DIRECTORY=public/assets/uploads
-UPLOAD_PUBLIC_PATH=/assets/uploads
-UPLOAD_SIZE_MAX=2097152
-UPLOAD_FORMAT_WHITE_LIST=["png","jpg","jpeg","webp"]
-
-2 installer cypress 
-https://github.com/cypress-io/github-action
-3 ajouter des tests dans le dossier cypress (e2e)
-4 faire un push vers la branche feature et vérifier que le CI se lance correctement.
-NB : attention la base url sera http://127.0.0.1:8000/ dans les tests
-Mathieu MITH — 17/04/2026 12:23
-fichier workflow :
-# nom
-name: e2e tests cypress et PHP
-# declencheur
-on:
-  push:
-    branches:
-
-main.yml
-2 Ko
-Mathieu MITH — 17/04/2026 13:46
-ajouter ce block dans package.json :
-"scripts": {
-    "test": "cypress open"
-  },
-le lancer une première fois :
-npm run test
-
-Pour créer l'arborescence de cypress
-Mathieu MITH — 17/04/2026 14:59
-créer la bdd :
-mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
-Benoit — 17/04/2026 16:22
-run: | 
-          cp .env.docker .env
-          mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
-          echo "DATABASE_HOST=127.0.0.1" >> .env
-Mathieu MITH — 17/04/2026 16:47
-fichier complet
-# nom
-name: e2e tests cypress et PHP
-# declencheur
-on:
-  push:
-    branches:
-
-main.yml
-3 Ko
-npm 
 # nom
 name: e2e tests cypress et PHP
 # declencheur
@@ -150,5 +73,3 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           password: ${{ secrets.FTP_PASSWORD }}
           username: ${{ secrets.FTP_USERNAME }}
-main.yml
-3 Ko
