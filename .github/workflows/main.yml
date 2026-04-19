@@ -1,3 +1,81 @@
+Denver
+denverevned
+En ligne
+
+Mathieu MITH — 17/04/2026 09:15
+lien de l'évaluation github :
+Type de fichier joint : acrobat
+Evaluation_git_CDA-ALT-26-01.pdf
+499.79 KB
+Envoyer au formateur l’url du repository github de l’évaluation de rattrapage
+(à récupérer dans code sur github).
+Dans un mail avec comme objet : evaluation git CDA-ALT-26-01 Nom prénom
+Contenu du mail l’url du repository github
+email : mathieumithridate@adrar-formation.com
+Mathieu MITH — 17/04/2026 11:18
+repository projet :
+⁠testing_plan-de-test⁠ 
+Mathieu MITH — 17/04/2026 12:14
+Depuis le projet library :
+1 fork depuis l'url : https://github.com/evaluationWeb/library_ci_cd.git
+2 Editer le fichier main.yml
+ajouter les steps suivante (à la suite) :
+1 Créer le fichier .env avec le contenu suivant :
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=rootpw
+DATABASE_NAME=ci_cd
+UPLOAD_DIRECTORY=public/assets/uploads
+UPLOAD_PUBLIC_PATH=/assets/uploads
+UPLOAD_SIZE_MAX=2097152
+UPLOAD_FORMAT_WHITE_LIST=["png","jpg","jpeg","webp"]
+
+2 installer cypress 
+https://github.com/cypress-io/github-action
+3 ajouter des tests dans le dossier cypress (e2e)
+4 faire un push vers la branche feature et vérifier que le CI se lance correctement.
+NB : attention la base url sera http://127.0.0.1:8000/ dans les tests
+Mathieu MITH — 17/04/2026 12:23
+fichier workflow :
+# nom
+name: e2e tests cypress et PHP
+# declencheur
+on:
+  push:
+    branches:
+
+main.yml
+2 Ko
+Mathieu MITH — 17/04/2026 13:46
+ajouter ce block dans package.json :
+"scripts": {
+    "test": "cypress open"
+  },
+le lancer une première fois :
+npm run test
+
+Pour créer l'arborescence de cypress
+Mathieu MITH — 17/04/2026 14:59
+créer la bdd :
+mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
+Benoit — 17/04/2026 16:22
+run: | 
+          cp .env.docker .env
+          mysql -h 127.0.0.1 -P 3306 -u root -prootpw < db.sql
+          echo "DATABASE_HOST=127.0.0.1" >> .env
+Mathieu MITH — 17/04/2026 16:47
+fichier complet
+# nom
+name: e2e tests cypress et PHP
+# declencheur
+on:
+  push:
+    branches:
+
+main.yml
+3 Ko
+npm 
 # nom
 name: e2e tests cypress et PHP
 # declencheur
@@ -9,6 +87,7 @@ on:
     branches:
       - feature
       - main
+  workflow_dispatch:
 # environnement
 jobs:
   build:
@@ -25,7 +104,7 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -prootpw"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5      
@@ -38,29 +117,38 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: pdo_mysql, intl, mbstring, zip
+          extensions: mbstring, intl, pdo_mysql, sodium, zip
           tools: composer
-      - name: MEP du fichier env et BDD
+      - name: fichier .env.docker .env
         run: |
           cp .env.docker .env
-          echo "DATABASE_HOST=127.0.0.1" >> .env
-          until mysql -h 127.0.0.1 -P 3306 -u root -proot -e "SELECT 1"; do
-            sleep 2
-          done
-          mysql -h 127.0.0.1 -P 3306 -u root -proot ci_cd < db.sql
-
-      - name: Installer les dépendances
-        run: composer install
-
-      - name: Démarrer le serveur PHP
-        run: php -S 127.0.0.1:8000 -t public &
-
-      - name: Run Cypress
-        uses: cypress-io/github-action@v7
-# job : build (environnemt du projet)
-
-# compiler le code
-
-# job : test (environnement du projet)
-# installer cypress
-# lancer les tests cypress
+          echo 'DATABASE_HOST=localhost:3306'>> .env
+          cat .env
+      - name: migrer la bdd
+        run : |
+          mysql -h 127.0.0.1 -P 3306 -u root -proot < db.sql
+      - name: installer les dépendances
+        run: | 
+          composer install
+      - name: démarrer le serveur PHP
+        run: |
+          php -S 127.0.0.1:8080 -t public &
+      
+      # install cypress
+      - name : Test Cypress
+        uses: cypress-io/github-action@v6
+      - name: build .env production
+        run: |
+          echo 'DATABASE_HOST=${{ secrets.DATABASE_HOST}}'>> .env
+          echo 'DATABASE_PORT=${{ secrets.DATABASE_PORT}}'>> .env
+          echo 'DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}'>> .env
+          echo 'DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}'>> .env
+          echo 'DATABASE_NAME=${{ secrets.DATABASE_NAME }}'>> .env
+      - name: 📂 Deployment to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          username: ${{ secrets.FTP_USERNAME }}
+main.yml
+3 Ko
