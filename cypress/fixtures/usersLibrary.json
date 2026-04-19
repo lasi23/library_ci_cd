@@ -1,0 +1,24 @@
+{
+    "users": [
+        { "firstname": "Alice", "lastname": "Martin", "email": "alice.martin1@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Lucas", "lastname": "Bernard", "email": "lucas.bernard2@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Emma", "lastname": "Dubois", "email": "emma.dubois3@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Hugo", "lastname": "Thomas", "email": "hugo.thomas4@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Chloé", "lastname": "Robert", "email": "chloe.robert5@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Louis", "lastname": "Richard", "email": "louis.richard6@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Léa", "lastname": "Petit", "email": "lea.petit7@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Gabriel", "lastname": "Durand", "email": "gabriel.durand8@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Manon", "lastname": "Leroy", "email": "manon.leroy9@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Nathan", "lastname": "Moreau", "email": "nathan.moreau10@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+
+        { "firstname": "Camille", "lastname": "Simon", "email": "camille.simon11@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Thomas", "lastname": "Laurent", "email": "thomas.laurent12@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Sarah", "lastname": "Lefebvre", "email": "sarah.lefebvre13@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Enzo", "lastname": "Michel", "email": "enzo.michel14@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Inès", "lastname": "Garcia", "email": "ines.garcia15@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Noah", "lastname": "David", "email": "noah.david16@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Jade", "lastname": "Bertrand", "email": "jade.bertrand17@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Adam", "lastname": "Roux", "email": "adam.roux18@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" },
+        { "firstname": "Lina", "lastname": "Vincent", "email": "lina.vincent19@test.com", "password": "Pass123!", "confirmPassword": "Pass123!" }
+    ]
+}
