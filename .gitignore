@@ -3,8 +3,8 @@ composer.lock
 vendor/
 node_modules/
 *.png
-*.jpg
 
+*.jpeg
 *.gif
 *.svg
 *.log
