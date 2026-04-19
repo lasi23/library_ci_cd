@@ -1,6 +1,6 @@
-
 # nom
 name: e2e tests cypress et PHP
+
 # declencheur
 on:
   push:
@@ -10,15 +10,12 @@ on:
     branches:
       - feature
       - main
-  workflow_dispatch:
-# environnement
+
 jobs:
   build:
-    # image unbuntu
     runs-on: ubuntu-latest
-    # base de données
+
     services:
-      # Service MySQL
       mysql:
         image: mysql:8.0
         env:
@@ -30,44 +27,48 @@ jobs:
           --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5      
-    # etape : checkout code
+          --health-retries=5
+
     steps:
-      - name: checkout recuperation du code
-        uses: actions/checkout@v6
-      #install de php
+      - name: Checkout récupération du code
+        uses: actions/checkout@v4  # ✅ v6 n'existe pas
+
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: mbstring, intl, pdo_mysql, sodium, zip
+          extensions: pdo_mysql, intl, mbstring, zip
           tools: composer
-      - name: fichier .env.docker .env
+
+      - name: MEP du fichier env et BDD  # ✅ AVANT PHP et Cypress
         run: |
           cp .env.docker .env
-          echo 'DATABASE_HOST=localhost:3306'>> .env
-          cat .env
-      - name: migrer la bdd
-        run : |
-          mysql -h 127.0.0.1 -P 3306 -u root -proot < db.sql
-      - name: installer les dépendances
-        run: | 
-          composer install
-      - name: démarrer le serveur PHP
+          echo "DATABASE_HOST=127.0.0.1" >> .env
+          echo "DATABASE_PORT=3306" >> .env
+          until mysql -h 127.0.0.1 -P 3306 -u root -proot -e "SELECT 1"; do
+            sleep 2
+          done
+          mysql -h 127.0.0.1 -P 3306 -u root -proot ci_cd < db.sql
+
+      - name: Installer les dépendances
+        run: composer install
+
+      - name: Démarrer le serveur PHP  # ✅ AVANT Cypress
+        run: php -S 127.0.0.1:8000 -t public &
+
+      - name: Run Cypress  # ✅ EN DERNIER
+        uses: cypress-io/github-action@v7
+
+      # CD - déploiement
+      - name: Build .env production
         run: |
-          php -S 127.0.0.1:8080 -t public &
-      
-      # install cypress
-      - name : Test Cypress
-        uses: cypress-io/github-action@v6
-      - name: build .env production
-        run: |
-          echo 'DATABASE_HOST=${{ secrets.DATABASE_HOST}}'>> .env
-          echo 'DATABASE_PORT=${{ secrets.DATABASE_PORT}}'>> .env
-          echo 'DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}'>> .env
-          echo 'DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}'>> .env
-          echo 'DATABASE_NAME=${{ secrets.DATABASE_NAME }}'>> .env
-      - name: 📂 Deployment to FTP
+          echo 'DATABASE_HOST=${{ secrets.DATABASE_HOST }}' >> .env
+          echo 'DATABASE_PORT=${{ secrets.DATABASE_PORT }}' >> .env
+          echo 'DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}' >> .env
+          echo 'DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}' >> .env
+          echo 'DATABASE_NAME=${{ secrets.DATABASE_NAME }}' >> .env
+
+      - name: Deployment to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
