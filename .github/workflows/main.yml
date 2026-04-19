@@ -54,7 +54,7 @@ jobs:
           composer install
       - name: démarrer le serveur PHP
         run: |
-          php -S 127.0.0.1:8080 -t public &
+          php -S 127.0.0.1:8000 -t public &
       
       # install cypress
       - name : Test Cypress
